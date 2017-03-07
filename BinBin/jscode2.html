@@ -87,7 +87,8 @@
 			var rank=document.getElementById("rank");//排序按钮
 			var arr=[];//用一个数组存放排列前高度
 			rightIn.onclick=function () {//点击事件绑定
-				if(queue.lastChild.nodeName=="#text"){//判断是否存在空格节点
+				
+				if(queue.childNodes.length>0&&queue.lastChild.nodeName=="#text"){//判断是否存在空格节点
 					queue.removeChild(queue.firstChild)
 				}
 				if (lis.length>20) {//对列元素过多的判断
@@ -107,7 +108,8 @@
 				}
 			}
 			leftIn.onclick=function () {
-				if(queue.firstChild.nodeName=="#text"){
+				console.log(queue.childNodes)
+				if(queue.childNodes.length>0&&queue.firstChild.nodeName=="#text"){
 					queue.removeChild(queue.firstChild)
 				}
 				if (lis.length>20) {
