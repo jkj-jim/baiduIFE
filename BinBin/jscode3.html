@@ -74,25 +74,24 @@
 		</div>
 		<script type="text/javascript">
 			var txts=document.getElementById("txts");//存放textarea元素
-			var target=document.getElementById("target");
+			var target=document.getElementById("target");//存放input元素
 			var w=document.getElementById("warn");//存放提示span
 			var queue=document.getElementById("queue");//存放队列ul
 			var lis=queue.getElementsByTagName("li");
-			var leftIn=document.getElementById("leftIn");//左入按钮
-			var rightIn=document.getElementById("rightIn");//右入按钮
+			var leftIn=document.getElementById("leftIn");//插入按钮
 			var leftOut=document.getElementById("leftOut");//左出按钮
 			var rightOut=document.getElementById("rightOut");//右出按钮
-			var check=document.getElementById("check");
+			var check=document.getElementById("check");//查询按钮
 			
 			leftIn.onclick=function () {
-				console.log(typeof(txts.value)+":"+txts.value);
+				console.log(typeof(txts.value)+":"+txts.value);//调试用
 				if (txts.value=="") {
-					w.style.display="inline";
+					w.style.display="inline";//空文本输入时提示"输入内容"
 				} else{
 					var arr=[];
-					arr=txts.value.split(/[，, \n;\t-]/);
+					arr=txts.value.split(/[，, \n;\t-]/);//对文本域中内容进行正则表达式分割
 					for(var i=0;i<arr.length;i++){
-					if(arr[i]!=""){
+					if(arr[i]!=""){//隔离空文本的数组元素
 					var li=document.createElement("li");
 					li.innerHTML=arr[i];
 					li.onclick=removeSelf;
@@ -102,7 +101,7 @@
 					w.style.display="none";
 					txts.value="";
 				}
-				console.log(arr);
+				console.log(arr);//调试用
 			}
 			rightOut.onclick=function () {
 //				console.log(lis);
@@ -125,13 +124,13 @@
 			}
 			check.onclick=function () {
 				var str=target.value;
-				console.log(typeof(target.value)+":"+target.value);
-				if(target.value=="")
+				console.log(typeof(target.value)+":"+target.value);//调试用
+				if(target.value=="")//判断是否输入查询文本
 				{
 					alert("请输入查询文本");
 				}else{
 				for (var i=0;i<lis.length;i++) {
-					if (lis[i].innerHTML.indexOf(str)!=-1) {
+					if (lis[i].innerHTML.indexOf(str)!=-1) {//内容是否包含查询字符串
 						lis[i].style.backgroundColor="blue";
 					}else{
 						lis[i].style.backgroundColor="red";
