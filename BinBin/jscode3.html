@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.container{
+				width: auto;
+				height: 500px;
+				border: 1px solid;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			.in{
+				/*height: 20px;*/
+				padding: 10px 10px 5px;
+			}
+			.in input{
+				text-align: right;
+			}
+			.in button{
+				height: 21px;
+				padding: 3px 6px;
+			}
+			.warn{
+				margin: 0;
+				padding: 0px 10px;
+				width: auto;	
+				height: auto;
+			}
+			span{
+				float: left;
+				margin: 0px 0px 5px;
+				padding: 0;
+				color: red;
+				font-size: 13px;
+				display: none;
+			}
+			.out{
+				clear: both;
+				width: auto;
+			}
+			.out ul{
+				margin: 0;
+				padding:0px 5px;
+			}
+			.out ul li{	
+				padding: 5px;
+				margin: 0px 5px;
+				line-height: 25px;
+				text-align: center;
+				background-color: red;
+				color: white;
+				float: left;
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="in">
+				<textarea name="" rows="10" cols="50"id="txts" ></textarea>
+				<input type="text" name="" id="target" value="" />
+				<button id="leftIn">插入</button>
+				<button id="leftOut">左侧出</button>
+				<button id="rightOut">右侧出</button>
+				<button id="check">查询</button>
+			</div>
+			<div class="warn"><span id="warn">请输入内容</span></div>
+			<div class="out">
+				<ul id="queue">
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var txts=document.getElementById("txts");//存放textarea元素
+			var target=document.getElementById("target");
+			var w=document.getElementById("warn");//存放提示span
+			var queue=document.getElementById("queue");//存放队列ul
+			var lis=queue.getElementsByTagName("li");
+			var leftIn=document.getElementById("leftIn");//左入按钮
+			var rightIn=document.getElementById("rightIn");//右入按钮
+			var leftOut=document.getElementById("leftOut");//左出按钮
+			var rightOut=document.getElementById("rightOut");//右出按钮
+			var check=document.getElementById("check");
+			
+			leftIn.onclick=function () {
+				console.log(typeof(txts.value)+":"+txts.value);
+				if (txts.value=="") {
+					w.style.display="inline";
+				} else{
+					var arr=[];
+					arr=txts.value.split(/[，, \n;\t-]/);
+					for(var i=0;i<arr.length;i++){
+					if(arr[i]!=""){
+					var li=document.createElement("li");
+					li.innerHTML=arr[i];
+					li.onclick=removeSelf;
+					queue.insertBefore(li,queue.firstChild);//将li插入ul最前	
+								}
+							}
+					w.style.display="none";
+					txts.value="";
+				}
+				console.log(arr);
+			}
+			rightOut.onclick=function () {
+//				console.log(lis);
+				if (lis.length>0) {
+					alert(lis[lis.length-1].innerHTML);//获取最后一个li的内容，并弹窗显示
+					queue.removeChild(lis[lis.length-1]);//删除最后一个li
+					w.style.display="none";
+				}else{
+					w.style.display="inline";
+				}
+			}
+			leftOut.onclick=function () {
+				if (lis.length>0) {
+					alert(lis[0].innerHTML);//获取第一个li的内容，并弹窗显示
+					queue.removeChild(lis[0]);//删除第一个li
+					w.style.display="none";
+				}else{
+					w.style.display="inline";
+				}
+			}
+			check.onclick=function () {
+				var str=target.value;
+				console.log(typeof(target.value)+":"+target.value);
+				if(target.value=="")
+				{
+					alert("请输入查询文本");
+				}else{
+				for (var i=0;i<lis.length;i++) {
+					if (lis[i].innerHTML.indexOf(str)!=-1) {
+						lis[i].style.backgroundColor="blue";
+					}else{
+						lis[i].style.backgroundColor="red";
+					}
+				}
+				}
+			}
+			function removeSelf() {//自我删除函数
+				queue.removeChild(this);
+			}
+		</script>
+	</body>
+</html>
